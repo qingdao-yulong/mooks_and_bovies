@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Directors</title>
+    <title th:replace="components/head.html :: head"></title>
+</head>
+<body style="background-color: peachpuff;">
+
+<div th:replace="components/navbar.html :: navbar"></div>
+
+<div class="container">
+
+    <h1>Directors</h1>
+
+    <table class="table table-responsive text-center hover" style="background-color: beige" id="data-table">
+        <thead>
+        <tr>
+            <th>Image</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="d : ${directors}">
+            <td class="align-middle"><img style="max-width:100px" th:src="@{/static/img/directors/{path}(path=${d.image})}"
+                     alt="director-image"></td>
+            <td class="align-middle" th:text="${d.firstName}"></td>
+            <td class="align-middle" th:text="${d.lastName}"></td>
+            <td class="align-middle">
+                <a class="btn btn-primary" th:href="@{/directors/show/{directorId}(directorId=${d.id})}">Movies</a>
+                <a th:if="null != ${session.admin}" class="btn btn-primary" th:href="@{/directors/edit/{directorId}(directorId=${d.id})}">Edit</a>
+                <a th:if="null != ${session.admin}" class="btn btn-danger delete-director" th:value="${d.id}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:if="null != ${session.admin}" class="btn btn-primary" th:href="@{/directors/create}">Create Director</a>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Table paging
+        var table = $('#data-table').DataTable();
+
+        $('td').css('background-color', 'beige');
+
+        $('.delete-director').click(function () {
+            var d = this.getAttribute("value");
+            var column = this.parentElement;
+            var row = column.parentElement;
+            $.ajax({
+                url: '/directors/delete/' + d.toString(),
+                type: 'GET',
+                success: function () {
+                    row.remove();
+                },
+                error: function () {
+                    alert('This director is assigned to a movie');
+                }
+            })
+        });
+    });
+</script>
+</body>
+</html>

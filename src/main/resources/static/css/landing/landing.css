@@ -1,0 +1,31 @@
+.movie-image {
+    width: 300px;
+    height: 400px;
+}
+
+.movie-image:hover {
+    opacity: 0.3;
+}
+
+.movie-image:hover + .film-info {
+    display: block;
+}
+
+.film-info:hover + .movie-image {
+    opacity: 0.3;
+}
+
+.film-card {
+    position: relative;
+    text-align: center;
+    color: black
+}
+
+.film-info {
+    display: none;
+    position: absolute;
+    top:50%;
+    bottom:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+}

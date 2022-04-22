@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Actor Profile</title>
+    <title th:replace="components/head.html :: head"></title>
+    <link rel="stylesheet" th:href="@{/css/landing/landing.css}">
+</head>
+<body style="background-color: peachpuff;">
+<div th:replace="components/navbar.html :: navbar"></div>
+
+<div class="container">
+    <h1 th:text="${actor.firstName} + ' ' + ${actor.lastName} + ' movies'"></h1>
+
+    <div class="row" style="margin-top: 40px">
+        <div class="col-md-4" th:each="m : ${movies}">
+            <div class="film-card" style="margin-bottom: 30px">
+                <a th:href="@{/movies/show/{movieId}(movieId=${m.id})}">
+                    <img class="movie-image" th:src="@{/static/img/movies/{path}(path=${m.image})}"
+                         alt="movie-image">
+                    <div class="film-info" th:text="${m.englishName}"></div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

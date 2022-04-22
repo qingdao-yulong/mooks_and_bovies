@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Publisher</title>
+    <title th:replace="components/head.html :: head"></title>
+</head>
+<body style="background-color: peachpuff;">
+<div th:replace="components/navbar.html :: navbar"></div>
+
+<form th:action="@{/publishers/edit/{publisherId}(publisherId=${publisherId})}" style="width: 70%" class="rounded border border-primary" method="post">
+
+    <div class="form-group" style="width: 30%;margin: auto">
+        <label for="name">Name</label>
+        <input required class="form-control" type="text" name="name" id="name">
+    </div>
+
+    <button class="btn btn-primary" id="submit-form" type="submit">Save</button>
+</form>
+
+</body>
+</html>

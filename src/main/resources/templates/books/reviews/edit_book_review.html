@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Book Review</title>
+    <title th:replace="components/head.html :: head"></title>
+</head>
+<body style="background-color: peachpuff;">
+<div th:replace="components/navbar.html :: navbar"></div>
+
+<div class="container">
+
+    <h1>Edit Book Review</h1>
+
+    <form action="#" th:action="@{/books/show/{book}(book=${book})/book_review/edit}" style="width: 50%; margin-top: 5%" class="rounded border border-primary" method="post">
+        <div class="form-group">
+            <label for="rating">Rating</label>
+            <input th:value="${review.rating}" class="form-control" type="text" id="rating">
+        </div>
+
+        <div class="form-group">
+            <label for="comments">Comment</label>
+            <textarea class="form-control" name="comments" id="comments" cols="30" rows="10"></textarea>
+            <p hidden id="comments-value">[[${review.comments}]]</p>
+        </div>
+
+        <button class="btn btn-primary" id="submit-form" type="submit">Save</button>
+    </form>
+</div>
+<script>
+    var comments = $('#comments-value').text();
+    $('#comments').text(comments);
+</script>
+</body>
+</html>

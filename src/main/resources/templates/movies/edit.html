@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Movie</title>
+    <title th:replace="components/head.html :: head"></title>
+</head>
+<body style="background-color: peachpuff;">
+<div th:replace="components/navbar.html :: navbar"></div>
+
+<div class="container">
+
+    <h1>Edit Movie</h1>
+
+    <form th:action="@{/movies/edit/{id}(id=${movieId})}" th:method="POST" style="width: 70%"
+          class="rounded border border-primary" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="englishName">English Name</label>
+                    <input required th:value="${movie.englishName}" class="form-control" type="text" name="englishName"
+                           id="englishName">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea required class="form-control" name="description" id="description"
+                              cols="7" rows="10"></textarea>
+                    <p id="description-value" hidden th:text="${movie.description}"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <input required th:value="${movie.country}" class="form-control" type="text" name="country" id="country">
+                </div>
+
+                <div class="form-group">
+                    <label for="language">Language</label>
+                    <input required th:value="${movie.language}" class="form-control" type="text" name="language" id="language">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="duration">Duration</label>
+                    <input required th:value="${movie.duration}" class="form-control" type="number" name="duration"
+                           id="duration">
+                </div>
+
+                <div class="form-group">
+                    <label for="releaseDate">Release Date</label>
+                    <input required th:value="${movie.releaseDate}" class="form-control" type="date" name="releaseDate"
+                           id="releaseDate">
+                </div>
+
+                <div class="form-group">
+                    <label for="genre">Genre</label>
+                    <input required th:value="${movie.genre}" class="form-control" type="text" name="genre" id="genre">
+                </div>
+
+                <div class="form-group">
+                    <label for="fileImage">Image</label>
+                    <input class="form-control" type="file" name="fileImage" id="fileImage" alt="movie-image">
+                    <small th:class="'form-text text-muted'" th:text="'Current image: ' + ${movie.image}"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="director">Director</label>
+                    <select required class="form-control" name="director" id="director">
+                        <option th:each="d : ${directors}" th:value="${d.id}"
+                                th:text="${d.firstName} + ' ' + ${d.lastName}"></option>
+                    </select>
+                    <p id="director-value" hidden>[[ ${movie.director} ]]</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="starring">Starring</label>
+                    <select required class="form-control" name="starring" id="starring">
+                        <option th:each="a : ${actors}" th:value="${a.id}"
+                                th:text="${a.firstName} + ' ' + ${a.lastName}"></option>
+                    </select>
+                    <p id="starring-value" hidden>[[ ${movie.starring} ]]</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="screenwriter">Screenwriter</label>
+                    <select required class="form-control" name="screenwriter" id="screenwriter">
+                        <option th:each="s : ${screenwriters}" th:value="${s.id}"
+                                th:text="${s.firstName} + ' ' + ${s.lastName}"></option>
+                    </select>
+                    <p id="screenwriter-value" hidden>[[ ${movie.screenwriter} ]]</p>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" id="submit-form" type="submit">Submit</button>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        var desc = $('#description-value').text();
+        $('#description').val(desc);
+
+        var sr = $('#screenwriter-value').text();
+        $('#screenwriter option[value="'+sr+'"]').attr('selected', 'selected');
+
+        var dr = $('#director-value').text();
+        $('#director option[value="'+dr+'"]').attr('selected', 'selected');
+
+        var st = $('#starring-value').text();
+        $('#starring option[value="'+st+'"]').attr('selected', 'selected');
+    });
+</script>
+</body>
+</html>

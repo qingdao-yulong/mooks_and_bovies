@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Actor</title>
+    <title th:replace="components/head.html :: head"></title>
+</head>
+<body style="background-color: peachpuff;">
+
+<div th:replace="components/navbar.html :: navbar"></div>
+
+<div class="container">
+
+    <h1>Edit Actor</h1>
+
+    <form th:action="@{/actors/edit/{actorId}(actorId = ${actorId})}" style="width: 50%; margin-top: 3%"
+          class="rounded border border-primary" method="post" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input th:class="'form-control'" th:value="${actor.firstName}" type="text" name="firstName" id="firstName">
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input th:class="'form-control'" th:value="${actor.lastName}" type="text" name="lastName" id="lastName">
+        </div>
+
+        <div class="form-group">
+            <label for="age">Age</label>
+            <input th:class="'form-control'" th:value="${actor.age}" type="number" name="age" id="age">
+        </div>
+
+        <div class="form-group">
+            <label for="pob">Place of Birth</label>
+            <input th:class="'form-control'" th:value="${actor.pob}" type="text" name="pob" id="pob">
+        </div>
+
+        <div class="form-group">
+            <label for="fileImage">Image</label>
+            <input th:class="'form-control'" type="file" name="fileImage" id="fileImage" alt="actor-image">
+            <small th:class="'form-text text-muted'" th:text="'Current image: ' + ${actor.image}"></small>
+        </div>
+
+        <button class="btn btn-primary" id="submit-form" type="submit">Save</button>
+    </form>
+</div>
+</body>
+</html>

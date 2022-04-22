@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <title th:replace="components/head.html :: head"></title>
+    <link rel="stylesheet" th:href="@{/css/landing/landing.css}">
+</head>
+<body style="background-color: peachpuff;">
+<div th:replace="components/navbar.html :: navbar"></div>
+<div class="container">
+
+    <h2 class="text-center" style="margin: 30px auto">Movies</h2>
+
+    <div class="row">
+        <div class="col-md-4" th:each="m : ${movies}">
+            <div class="film-card" style="margin-top: 20px">
+                <a th:href="@{/movies/show/{movieId}(movieId=${m.id})}">
+                    <img class="movie-image" th:src="@{/static/img/movies/{path}(path=${m.image})}"
+                         alt="movie-image">
+                    <div class="film-info" th:text="${m.englishName}"></div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <h2 style="margin: 30px auto" th:class="text-center">Books</h2>
+
+    <div class="row">
+        <div class="col-md-4" th:each="b : ${books}">
+            <div class="film-card" style="margin-top: 20px">
+                <a th:href="@{/books/show/{bookId}(bookId=${b.id})}">
+                    <img class="movie-image" th:src="@{/static/img/books/{path}(path=${b.image})}"
+                         alt="book-image">
+                    <div class="film-info" th:text="${b.englishName}"></div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

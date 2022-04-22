@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Profile</title>
+    <title th:replace="components/head.html :: head"></title>
+</head>
+<body style="background-color: peachpuff">
+<div th:replace="components/navbar.html :: navbar"></div>
+<div class="container">
+    <div class="row">
+        <div id="movie-image-container" class="col-md-4">
+            <img style="width: 100%;vertical-align: center" th:src="@{/static/img/movies/{path}(path=${movie.image})}"
+                 alt="movie-image">
+        </div>
+        <div id="movie-info-container" style="background-color: beige; padding: 10px" class="col-md-6 rounded">
+            <h2 th:text="${movie.englishName}"></h2>
+            <p style="margin: 30px auto" th:text="${movie.description}"></p>
+            <p><strong>Rating:</strong> [[ ${movie.rating} ]]</p>
+            <p><strong>Origin:</strong> [[ ${movie.country} ]]</p>
+            <p><strong>Duration:</strong> [[ ${movie.duration} ]]</p>
+            <p><strong>Language:</strong> [[ ${movie.language} ]]</p>
+            <p><strong>Genre:</strong> [[ ${movie.genre} ]]</p>
+            <p><strong>Release Date:</strong> [[ ${movie.releaseDate} ]]</p>
+            <p><strong>Director:</strong> <a th:href="@{/directors/show/{directorId}(directorId=${director.id})}" th:text="${director.firstName} + ' ' + ${director.lastName}"></a></p>
+            <p><strong>Starring:</strong> <a th:href="@{/actors/show/{actorId}(actorId=${starring.id})}" th:text="${starring.firstName} + ' ' + ${starring.lastName}"></a></p>
+            <p><strong>Screenwriter:</strong> <a
+                    th:href="@{/screenwriters/show/{screenwriterId}(screenwriterId=${screenwriter.id})}"
+                    th:text="${screenwriter.firstName} + ' ' + ${screenwriter.lastName}"></a></p>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 50px">
+        <h2>Reviews</h2>
+        <div class="col-md-4 review-card" style="margin: 30px auto" th:if="${!movieReviews.isEmpty()}" th:each="r : ${movieReviews}" th:id="${r.id}">
+            <div class="card" style="width: 18rem; background-color: beige">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="'Author: ' + ${users.get(r.id)}"></h5>
+                    <p class="card-text" th:text="'Rating: ' + ${r.rating}"></p>
+                    <p class="card-text" th:text="'Comments: ' + ${r.comments}"></p>
+                    <p class="card-text text-muted" th:text="${r.createdAt}"></p>
+                    <div th:if="${r.user} == ${userId}">
+                        <a class="btn btn-primary"
+                           th:href="@{/movies/show/{movieId}/movie_review/edit/{reviewId}(movieId=${r.movie}, reviewId=${r.id})}"
+                           style="width: 30%">Edit</a>
+                        <a class="btn btn-danger delete-review"
+                           th:href="@{/movies/show/{movieId}/movie_review/delete/{reviewId}(movieId=${r.movie}, reviewId=${r.id})}"
+                           th:value="${r.id}" style="width: 30%">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${movieReviews.isEmpty()}">
+            <p>There are no reviews for this movie yet, be the first to review it!</p>
+        </div>
+    </div>
+
+    <a class="btn btn-primary" style="margin-bottom: 50px" th:if="null != ${session.admin}"
+       th:href="@{/movies/show/{movieId}/movie_review/create(movieId=${movie.id})}">Write a
+        review</a>
+
+</div>
+</body>
+</html>

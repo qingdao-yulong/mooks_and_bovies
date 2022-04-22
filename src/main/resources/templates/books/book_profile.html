@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Profile</title>
+    <title th:replace="components/head.html :: head"></title>
+</head>
+<body style="background-color: peachpuff;">
+<div th:replace="components/navbar.html :: navbar"></div>
+
+<div class="container">
+
+    <div class="row">
+        <div id="book-image-container" class="col-md-4">
+            <img style="width: 100%;vertical-align: center" th:src="@{/static/img/books/{path}(path=${book.image})}"
+                 alt="book-image">
+        </div>
+        <div id="book-info-container" class="col-md-6">
+            <h2 th:text="${book.englishName}"></h2>
+            <p style="margin: 30px auto" th:text="${book.description}"></p>
+            <p><strong>Rating:</strong> [[ ${book.rating} ]]</p>
+            <p><strong>Origin:</strong> [[ ${book.country} ]]</p>
+            <p><strong>Price:</strong>$[[ ${book.price} ]]</p>
+            <p><strong>Pages:</strong> [[ ${book.pages} ]]</p>
+            <p><strong>Language:</strong> [[ ${book.language} ]]</p>
+            <p><strong>Genre:</strong> [[ ${book.genre} ]]</p>
+            <p><strong>Release Date:</strong> [[ ${book.releaseDate} ]]</p>
+            <p><strong>Author:</strong> <a th:href="@{/authors/show/{authorId}(authorId=${author.id})}"
+                                           th:text="${author.firstName} + ' ' + ${author.lastName}"></a></p>
+            <p><strong>Publisher:</strong> <a th:href="@{/publishers/show/{publisherId}(publisherId=${publisher.id})}"
+                                              th:text="${publisher.name}"></a></p>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 50px">
+        <h2>Reviews</h2>
+        <div class="col-md-4 review-card" style="margin: 30px auto" th:if="${!reviewList.isEmpty()}" th:each="r : ${reviewList}" th:id="${r.id}">
+            <div class="card" style="width: 18rem;background-color: beige">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="'Author: ' + ${users.get(r.id)}"></h5>
+                    <p class="card-text" th:text="'Rating: ' + ${r.rating}"></p>
+                    <p class="card-text" th:text="'Comments: ' + ${r.comments}"></p>
+                    <p class="card-text text-muted" th:text="${r.createdAt}"></p>
+                    <div th:if="${r.userId} == ${userId}">
+                        <a class="btn btn-primary"
+                           th:href="@{/books/show/{bookId}/book_review/edit/{reviewId}(bookId=${r.book}, reviewId=${r.id})}"
+                           style="width: 30%">Edit</a>
+                        <a class="btn btn-danger delete-review"
+                           th:href="@{/books/show/{bookId}/book_review/delete/{reviewId}(bookId=${r.book}, reviewId=${r.id})}"
+                           th:value="${r.id}" style="width: 30%">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${reviewList.isEmpty()}">
+            <p>There are no reviews for this movie yet, be the first to review it!</p>
+        </div>
+    </div>
+
+    <a class="btn btn-primary" style="margin-bottom: 50px" th:if="null != ${session.admin}"
+       th:href="@{/books/show/{bookId}/book_review/create(bookId=${book.id})}">Write a
+        review</a>
+</div>
+</body>
+</html>

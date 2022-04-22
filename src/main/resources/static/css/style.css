@@ -1,0 +1,45 @@
+#submit-form {
+    display: block;
+    margin: 20px auto auto;
+}
+
+form {
+    margin: 3% auto 3%;
+    display: block;
+    padding: 20px;
+    background-color: beige;
+}
+
+h1 {
+    text-align: center;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-top: 10px;
+}
+
+body {
+    background-color: peachpuff;
+}
+
+#data-table_wrapper {
+    background-color: beige;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+input[type="search"] {
+    background-color: beige;
+}
+
+select[name="data-table_length"] {
+    background-color: beige;
+}
+
+td {
+    font-size: large;
+}

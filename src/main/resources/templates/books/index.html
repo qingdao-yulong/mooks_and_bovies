@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+    <title th:replace="components/head.html :: head"></title>
+</head>
+<body style="background-color: peachpuff;">
+<div th:replace="components/navbar.html :: navbar"></div>
+
+<div class="container">
+
+    <h1>Books</h1>
+
+    <table id="data-table" class="table table-responsive text-center">
+        <thead>
+        <tr>
+            <th>Image</th>
+            <th>English Name</th>
+            <th>Price</th>
+            <th>Language</th>
+            <th>Genre</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="b : ${bookList}">
+            <td class="align-middle"><img style="max-width:100px" th:src="@{/static/img/books/{path}(path=${b.image})}"
+                                          alt="book-image"></td>
+            <td class="align-middle"><p th:text="${b.englishName}"></p></td>
+            <td class="align-middle"><p th:text="'$' + ${b.price}"></p></td>
+            <td class="align-middle"><p th:text="${b.language}"></p></td>
+            <td class="align-middle"><p th:text="${b.genre}"></p></td>
+            <td class="align-middle">
+                <a class="btn btn-primary" th:href="@{/books/show/{bookId}(bookId=${b.id})}">Show</a>
+                <a th:if="null != ${session.admin}" th:href="@{/books/edit/{bookId}(bookId=${b.id})}" class="btn btn-primary">Edit</a>
+                <a th:if="null != ${session.admin}" class="btn btn-danger delete-book" th:value="${b.id}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:if="null != ${session.admin}" class="btn btn-primary" th:href="@{/books/create}">Create Book</a>
+</div>
+<script>
+    $(document).ready(function () {
+        // Table paging
+        $('#data-table').dataTable();
+
+        $('td').css('background-color', 'beige');
+
+        $('.delete-book').click(function () {
+            var d = this.getAttribute("value");
+            var column = this.parentElement;
+            var row = column.parentElement;
+            $.ajax({
+                url: '/books/delete/' + d.toString(),
+                type: 'GET',
+                success: function () {
+                    row.remove();
+                },
+                error: function () {
+                    alert('there was an issue');
+                }
+            })
+        });
+    });
+</script>
+</body>
+</html>

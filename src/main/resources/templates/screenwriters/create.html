@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Screenwriter</title>
+    <title th:replace="components/head.html :: head"></title>
+</head>
+<body style="background-color: peachpuff;">
+<div th:replace="components/navbar.html :: navbar"></div>
+
+<div class="container">
+
+    <h1>Create Screenwriter</h1>
+
+    <form th:action="@{/screenwriters/create}" method="post" style="width: 50%; margin-top: 5%" class="rounded border border-primary" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input required th:class="'form-control'" type="text" name="firstName" id="firstName">
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input required th:class="'form-control'" type="text" name="lastName" id="lastName">
+        </div>
+
+        <div class="form-group">
+            <label for="age">Age</label>
+            <input required th:class="'form-control'" type="number" name="age" id="age">
+        </div>
+
+        <div class="form-group">
+            <label for="pob">Place of Birth</label>
+            <input required th:class="'form-control'" type="text" name="pob" id="pob">
+        </div>
+
+        <div class="form-group">
+            <label for="fileImage">Image</label>
+            <input required th:class="'form-control'" type="file" name="fileImage" id="fileImage" alt="director-image">
+        </div>
+
+        <button class="btn btn-primary" id="submit-form" type="submit">Save</button>
+    </form>
+</div>
+
+</body>
+</html>
